@@ -27,13 +27,6 @@ export default function RekeningList() {
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="nb-btn px-3 py-2"
-              style={{ background: "var(--white)" }}
-            >
-              ☰
-            </button>
             <h1 className="text-2xl md:text-3xl font-bold"> Rekening</h1>
           </div>
           <div className="flex items-center gap-3">
