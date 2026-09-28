@@ -71,7 +71,7 @@ const ShareCard = forwardRef(({ celengan, progress }, ref) => {
           </div>
         </div>
          <p style={{ textAlign: "center", fontSize: 12, opacity: 0.6, marginTop: 16 }}>
-         Dibuat dengan Celenganku
+         Dibuat dengan MyPocket
       </p>     
     </div>
   );

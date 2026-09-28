@@ -23,8 +23,8 @@ export default function Login() {
     <div className="flex flex-col items-center justify-center h-screen overflow-hidden px-4" style={{ background: "var(--bg)" }}>
       <div className="nb-card p-8 md:p-10 w-full max-w-sm text-center no-select"
   style={{ background: "var(--yellow)" }}>
-        <div className="text-5xl mb-3">🪙</div>
-        <h1 className="text-3xl font-bold mb-1">Celenganku</h1>
+        <div className="mx-auto mb-3 w-32 h-32 "><img src="./public/favicon.svg" alt="Logo" /></div>
+        <h1 className="text-3xl font-bold mb-1">MyPocket</h1>
         <p className="text-sm mb-8">Nabung sambil lihat progresmu</p>
         <button
           onClick={handleLogin}

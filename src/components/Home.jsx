@@ -8,6 +8,7 @@ import ProfileMenu from "./ProfileMenu";
 import SortDropdown from "./SortDropdown";
 import { KATEGORI_LIST, getKategoriInfo } from "../utils/kategori";
 import Sidebar from "./Sidebar";
+import { Coins } from "lucide-react";
 
 export default function Home() {
   const { user, logout } = useAuth();
@@ -71,7 +72,9 @@ export default function Home() {
             >
               ☰
             </button>
-            <h1 className="text-2xl md:text-3xl font-bold"> Celenganku</h1>
+            <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
+              <Coins size={28} strokeWidth={2.5} /> MyPocket
+            </h1>
           </div>
           <div className="flex items-center gap-3">
             <ProfileMenu />
@@ -92,7 +95,7 @@ export default function Home() {
           className="nb-btn block text-center py-4 mb-6 text-lg"
           style={{ background: "var(--yellow)" }}
         >
-          + Tambah Celengan
+          + Tambah Tabungan
         </Link>
 
         {celenganList.length > 0 && (

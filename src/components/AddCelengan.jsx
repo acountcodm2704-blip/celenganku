@@ -65,10 +65,12 @@ export default function AddCelengan() {
   return (
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
-        <button onClick={() => navigate("/")} className="font-bold mb-4">
-          ← Kembali
-        </button>
-        <h1 className="text-2xl font-bold mb-6">Tambah Celengan Baru</h1>
+        <button onClick={() => navigate("/")}
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              style={{ background: "var(--white)" }}>
+            ← Kembali
+          </button>
+        <h1 className="text-2xl font-bold mb-6 mt-4">Tambah Tabungan Baru</h1>
 
         <form
           onSubmit={handleSubmit}
@@ -182,7 +184,7 @@ export default function AddCelengan() {
             className="nb-btn w-full py-3 disabled:opacity-50"
             style={{ background: "var(--yellow)" }}
           >
-            {loading ? "Menyimpan..." : "Simpan Celengan"}
+            {loading ? "Menyimpan..." : "Simpan Tabungan"}
           </button>
         </form>
       </div>

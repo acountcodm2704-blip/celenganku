@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import ShareCard from "./ShareCard";
 import { generateImageBlob } from "../utils/generateShareImage";
+import { Download, Share2 } from "lucide-react";
 
 export default function ShareModal({ celengan, progress, onClose }) {
   const cardRef = useRef(null);
@@ -28,11 +29,15 @@ export default function ShareModal({ celengan, progress, onClose }) {
 
   const handleShare = async () => {
     if (!navigator.share) {
-      alert("Fitur share tidak didukung di browser ini. Silakan download gambarnya.");
+      alert(
+        "Fitur share tidak didukung di browser ini. Silakan download gambarnya.",
+      );
       return;
     }
     try {
-      const file = new File([imageBlob], `celenganku-${celengan.nama}.png`, { type: "image/png" });
+      const file = new File([imageBlob], `celenganku-${celengan.nama}.png`, {
+        type: "image/png",
+      });
       await navigator.share({
         files: [file],
         title: "Progress Celenganku",
@@ -48,8 +53,17 @@ export default function ShareModal({ celengan, progress, onClose }) {
       className="fixed inset-0 flex items-center justify-center z-50 px-4"
       style={{ background: "rgba(0,0,0,0.6)" }}
     >
-      <div className="nb-card w-full max-w-sm overflow-hidden" style={{ background: "var(--white)" }}>
-        <div className="p-4" style={{ borderBottom: "3px solid black", background: "var(--yellow)" }}>
+      <div
+        className="nb-card w-full max-w-sm overflow-hidden"
+        style={{ background: "var(--white)" }}
+      >
+        <div
+          className="p-4"
+          style={{
+            borderBottom: "3px solid black",
+            background: "var(--yellow)",
+          }}
+        >
           <h2 className="font-bold text-center">Bagikan Progress</h2>
         </div>
 
@@ -57,7 +71,12 @@ export default function ShareModal({ celengan, progress, onClose }) {
           {loading ? (
             <div className="py-12 text-sm">Membuat gambar...</div>
           ) : (
-            <img src={imageUrl} alt="Preview" className="w-full rounded-xl" style={{ border: "2px solid black" }} />
+            <img
+              src={imageUrl}
+              alt="Preview"
+              className="w-full rounded-xl"
+              style={{ border: "2px solid black" }}
+            />
           )}
         </div>
 
@@ -72,18 +91,18 @@ export default function ShareModal({ celengan, progress, onClose }) {
           <button
             onClick={handleDownload}
             disabled={loading}
-            className="nb-btn flex-1 py-2 text-sm disabled:opacity-50"
+            className="nb-btn flex-1 py-2 text-sm disabled:opacity-50 flex items-center justify-center gap-1.5"
             style={{ background: "var(--white)" }}
           >
-            💾 Simpan
+            <Download size={14} strokeWidth={2.5} /> Simpan
           </button>
           <button
             onClick={handleShare}
             disabled={loading}
-            className="nb-btn flex-1 py-2 text-sm disabled:opacity-50"
+            className="nb-btn flex-1 py-2 text-sm disabled:opacity-50 flex items-center justify-center gap-1.5"
             style={{ background: "var(--green)" }}
           >
-            📤 Bagikan
+            <Share2 size={14} strokeWidth={2.5} /> Bagikan
           </button>
         </div>
       </div>

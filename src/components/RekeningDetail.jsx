@@ -13,6 +13,7 @@ import { formatRupiah, parseRupiah } from "../utils/formatRupiah";
 import { getJenisInfo } from "../utils/jenisRekening";
 import ConfirmModal from "./ConfirmModal";
 import RiwayatChart from "./RiwayatChart";
+import { Trash2 } from "lucide-react";
 
 export default function RekeningDetail() {
   const { id } = useParams();
@@ -63,20 +64,23 @@ export default function RekeningDetail() {
     return <p className="text-center mt-10 font-bold">Memuat...</p>;
 
   const jenisInfo = getJenisInfo(rekening.jenis);
+  const JenisIcon = jenisInfo.icon;
 
   return (
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
         <div className="flex justify-between items-center mb-4">
-          <button onClick={() => navigate("/rekening")} className="font-bold">
+          <button onClick={() => navigate("/rekening")}
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              style={{ background: "var(--white)" }}>
             ← Kembali
           </button>
           <button
             onClick={() => setShowConfirm(true)}
-            className="nb-btn px-3 py-1.5 text-sm"
+            className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
             style={{ background: "var(--red)" }}
           >
-            🗑 Hapus
+            <Trash2 size={14} strokeWidth={2.5} /> Hapus
           </button>
         </div>
 
@@ -84,7 +88,12 @@ export default function RekeningDetail() {
           className="nb-card p-5 mb-6 text-center"
           style={{ background: "var(--white)" }}
         >
-          <div className="text-4xl mb-2">{jenisInfo.emoji}</div>
+          <div
+            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3"
+            style={{ background: "var(--blue)", border: "3px solid black" }}
+          >
+            <JenisIcon size={30} strokeWidth={2.5} />
+          </div>
           <p className="font-bold text-lg mb-1">{rekening.nama}</p>
           <p className="text-xs opacity-70 mb-3">{jenisInfo.label}</p>
           <p className="text-3xl font-bold">

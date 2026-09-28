@@ -1,9 +1,11 @@
+import { Landmark, Smartphone, Banknote, TrendingUp, Briefcase } from "lucide-react";
+
 export const JENIS_REKENING = [
-  { value: "bank", label: "Bank", emoji: "🏦" },
-  { value: "ewallet", label: "E-Wallet", emoji: "📱" },
-  { value: "tunai", label: "Tunai", emoji: "💵" },
-  { value: "investasi", label: "Investasi", emoji: "📈" },
-  { value: "lainnya", label: "Lainnya", emoji: "💼" },
+  { value: "bank", label: "Bank", icon: Landmark },
+  { value: "ewallet", label: "E-Wallet", icon: Smartphone },
+  { value: "tunai", label: "Tunai", icon: Banknote },
+  { value: "investasi", label: "Investasi", icon: TrendingUp },
+  { value: "lainnya", label: "Lainnya", icon: Briefcase },
 ];
 
 export function getJenisInfo(value) {

@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { getJenisInfo } from "../utils/jenisRekening";
 import Sidebar from "./Sidebar";
 import ProfileMenu from "./ProfileMenu";
+import { Wallet } from "lucide-react";
 
 export default function RekeningList() {
   const { user, logout } = useAuth();
@@ -13,9 +14,14 @@ export default function RekeningList() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const q = query(collection(db, "rekening"), where("userId", "==", user.uid));
+    const q = query(
+      collection(db, "rekening"),
+      where("userId", "==", user.uid),
+    );
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      setRekeningList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+      setRekeningList(
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+      );
     });
     return unsubscribe;
   }, [user.uid]);
@@ -23,15 +29,31 @@ export default function RekeningList() {
   const totalHarta = rekeningList.reduce((sum, r) => sum + r.saldo, 0);
 
   return (
-    <div className="min-h-screen px-4 py-6 md:px-10" style={{ background: "var(--bg)" }}>
+    <div
+      className="min-h-screen px-4 py-6 md:px-10"
+      style={{ background: "var(--bg)" }}
+    >
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl md:text-3xl font-bold"> Rekening</h1>
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="nb-btn px-3 py-2 lg:hidden"
+              style={{ background: "var(--white)" }}
+            >
+              ☰
+            </button>
+            <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
+              <Wallet size={28} strokeWidth={2.5} /> Rekening
+            </h1>
           </div>
           <div className="flex items-center gap-3">
             <ProfileMenu />
-            <button onClick={logout} className="nb-btn px-4 py-2 text-sm" style={{ background: "var(--red)" }}>
+            <button
+              onClick={logout}
+              className="nb-btn px-4 py-2 text-sm"
+              style={{ background: "var(--red)" }}
+            >
               Keluar
             </button>
           </div>
@@ -39,9 +61,14 @@ export default function RekeningList() {
 
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        <div className="nb-card p-5 mb-6 text-center" style={{ background: "var(--yellow)" }}>
+        <div
+          className="nb-card p-5 mb-6 text-center"
+          style={{ background: "var(--yellow)" }}
+        >
           <p className="text-sm font-bold mb-1">Total Harta</p>
-          <p className="text-3xl font-bold">Rp{totalHarta.toLocaleString("id-ID")}</p>
+          <p className="text-3xl font-bold">
+            Rp{totalHarta.toLocaleString("id-ID")}
+          </p>
         </div>
 
         <Link
@@ -53,7 +80,10 @@ export default function RekeningList() {
         </Link>
 
         {rekeningList.length === 0 && (
-          <div className="nb-card p-8 text-center" style={{ background: "var(--white)" }}>
+          <div
+            className="nb-card p-8 text-center"
+            style={{ background: "var(--white)" }}
+          >
             <p>Belum ada rekening. Catat sumber uangmu di sini!</p>
           </div>
         )}
@@ -61,6 +91,8 @@ export default function RekeningList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {rekeningList.map((r) => {
             const jenisInfo = getJenisInfo(r.jenis);
+            const JenisIcon = jenisInfo.icon;
+
             return (
               <Link
                 key={r.id}
@@ -69,15 +101,20 @@ export default function RekeningList() {
                 style={{ background: "var(--white)" }}
               >
                 <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0"
-                  style={{ background: "var(--blue)", border: "2px solid black" }}
+                  className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: "var(--blue)",
+                    border: "2px solid black",
+                  }}
                 >
-                  {jenisInfo.emoji}
+                  <JenisIcon size={22} strokeWidth={2.5} />
                 </div>
                 <div className="min-w-0">
                   <p className="font-bold truncate">{r.nama}</p>
                   <p className="text-xs opacity-70 mb-1">{jenisInfo.label}</p>
-                  <p className="font-bold text-sm">Rp{r.saldo.toLocaleString("id-ID")}</p>
+                  <p className="font-bold text-sm">
+                    Rp{r.saldo.toLocaleString("id-ID")}
+                  </p>
                 </div>
               </Link>
             );

@@ -20,6 +20,7 @@ import EstimasiWaktu from "./EstimasiWaktu";
 import { getKategoriInfo } from "../utils/kategori";
 import RiwayatChart from "./RiwayatChart";
 import ShareModal from "./ShareModal";
+import { Share2, Pencil, Trash2 } from "lucide-react";
 
 export default function CelenganDetail() {
   const { user } = useAuth();
@@ -119,30 +120,32 @@ export default function CelenganDetail() {
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
         <div className="flex justify-between items-center mb-4">
-          <button onClick={() => navigate("/")} className="font-bold">
+          <button onClick={() => navigate("/")}
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              style={{ background: "var(--white)" }}>
             ← Kembali
           </button>
           <div className="flex gap-2">
             <button
               onClick={() => setShowShare(true)}
-              className="nb-btn px-3 py-1.5 text-sm"
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
               style={{ background: "var(--blue)" }}
             >
-              📤 Bagikan
+              <Share2 size={14} strokeWidth={2.5} /> Bagikan
             </button>
             <button
               onClick={() => navigate(`/celengan/${id}/edit`)}
-              className="nb-btn px-3 py-1.5 text-sm"
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
               style={{ background: "var(--yellow)" }}
             >
-              ✏️ Edit
+              <Pencil size={14} strokeWidth={2.5} /> Edit
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="nb-btn px-3 py-1.5 text-sm"
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
               style={{ background: "var(--red)" }}
             >
-              🗑 Hapus
+              <Trash2 size={14} strokeWidth={2.5} /> Hapus
             </button>
           </div>
         </div>
@@ -264,8 +267,8 @@ export default function CelenganDetail() {
 
       <ConfirmModal
         isOpen={showConfirm}
-        title="Hapus Celengan?"
-        message={`Celengan "${celengan.nama}" akan dihapus permanen dan tidak bisa dikembalikan.`}
+        title="Hapus Tabungan?"
+        message={`Tabungan "${celengan.nama}" akan dihapus permanen dan tidak bisa dikembalikan.`}
         onConfirm={confirmDelete}
         onCancel={() => setShowConfirm(false)}
         loading={deleting}

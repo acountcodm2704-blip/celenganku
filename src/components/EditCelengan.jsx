@@ -89,13 +89,12 @@ export default function EditCelengan() {
   return (
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
-        <button
-          onClick={() => navigate(`/celengan/${id}`)}
-          className="font-bold mb-4"
-        >
-          ← Kembali
-        </button>
-        <h1 className="text-2xl font-bold mb-6">Edit Celengan</h1>
+        <button onClick={() => navigate(`/celengan/${id}`)}
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              style={{ background: "var(--white)" }}>
+            ← Kembali
+          </button>
+        <h1 className="text-2xl font-bold mb-6 mt-4">Edit Tabungan</h1>
 
         <form
           onSubmit={handleSubmit}
