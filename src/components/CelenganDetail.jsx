@@ -156,7 +156,7 @@ export default function CelenganDetail() {
         >
           <div className="p-3">
             <div
-              className="w-full h-64 rounded-xl overflow-hidden"
+              className="relative w-full h-48 md:h-56 lg:h-90 rounded-xl mb-4 overflow-hidden"
               style={{ border: "3px solid black" }}
             >
               <img
