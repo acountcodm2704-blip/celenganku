@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import logo from "../assets/logo.png";
 
 export default function Login() {
   const { user, login } = useAuth();
@@ -23,7 +24,7 @@ export default function Login() {
     <div className="flex flex-col items-center justify-center h-screen overflow-hidden px-4" style={{ background: "var(--bg)" }}>
       <div className="nb-card p-8 md:p-10 w-full max-w-sm text-center no-select"
   style={{ background: "var(--yellow)" }}>
-        <div className="mx-auto mb-3 w-32 h-32"><img className="w-32 h-32 rounded-xl" src="./src/assets/logo.png" alt="Logo" /></div>
+        <div className="mx-auto mb-3 w-32 h-32"><img className="w-32 h-32 rounded-xl" src={logo} alt="Logo" /></div>
         <h1 className="text-3xl font-bold mb-1">MyPocket</h1>
         <p className="text-sm mb-8">Nabung sambil lihat progresmu</p>
         <button
