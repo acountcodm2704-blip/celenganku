@@ -2,7 +2,15 @@ import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import { getCroppedImageBlob } from "../utils/cropImage";
 
-export default function CropModal({ imageSrc, onCancel, onConfirm, loading }) {
+export default function CropModal({
+  imageSrc,
+  onCancel,
+  onConfirm,
+  loading = false,
+  aspect = 1,
+  cropShape = "round",
+  title = "Atur Posisi Foto",
+}) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -12,6 +20,7 @@ export default function CropModal({ imageSrc, onCancel, onConfirm, loading }) {
   }, []);
 
   const handleSave = async () => {
+    if (!croppedAreaPixels) return;
     const blob = await getCroppedImageBlob(imageSrc, croppedAreaPixels);
     onConfirm(blob);
   };
@@ -23,7 +32,7 @@ export default function CropModal({ imageSrc, onCancel, onConfirm, loading }) {
     >
       <div className="nb-card w-full max-w-sm overflow-hidden" style={{ background: "var(--white)" }}>
         <div className="p-4" style={{ borderBottom: "3px solid black", background: "var(--yellow)" }}>
-          <h2 className="font-bold text-center">Atur Posisi Foto</h2>
+          <h2 className="font-bold text-center">{title}</h2>
         </div>
 
         <div className="relative w-full" style={{ height: 300, background: "#333" }}>
@@ -31,9 +40,9 @@ export default function CropModal({ imageSrc, onCancel, onConfirm, loading }) {
             image={imageSrc}
             crop={crop}
             zoom={zoom}
-            aspect={1}
-            cropShape="round"
-            showGrid={false}
+            aspect={aspect}
+            cropShape={cropShape}
+            showGrid={cropShape === "rect"}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
@@ -42,7 +51,7 @@ export default function CropModal({ imageSrc, onCancel, onConfirm, loading }) {
 
         <div className="p-4 space-y-4">
           <div>
-            <label className="text-sm font-bold">🔍 Zoom</label>
+            <label className="text-sm font-bold">Zoom</label>
             <input
               type="range"
               min={1}

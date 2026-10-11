@@ -8,13 +8,18 @@ export function createImage(url) {
   });
 }
 
-export async function getCroppedImageBlob(imageSrc, croppedAreaPixels) {
+export async function getCroppedImageBlob(imageSrc, croppedAreaPixels, maxWidth = 1280) {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
-  canvas.width = croppedAreaPixels.width;
-  canvas.height = croppedAreaPixels.height;
+  // perkecil kalau hasil crop terlalu besar, supaya tidak melebihi batas 5MB
+  const scale = Math.min(1, maxWidth / croppedAreaPixels.width);
+  const outW = Math.round(croppedAreaPixels.width * scale);
+  const outH = Math.round(croppedAreaPixels.height * scale);
+
+  canvas.width = outW;
+  canvas.height = outH;
 
   ctx.drawImage(
     image,
@@ -24,8 +29,8 @@ export async function getCroppedImageBlob(imageSrc, croppedAreaPixels) {
     croppedAreaPixels.height,
     0,
     0,
-    croppedAreaPixels.width,
-    croppedAreaPixels.height
+    outW,
+    outH
   );
 
   return new Promise((resolve) => {

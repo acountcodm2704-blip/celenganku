@@ -131,12 +131,7 @@ export default function Ringkasan() {
               <ChartColumn size={28} strokeWidth={2.5} /> Ringkasan
             </h1>
           </div>
-          <div className="flex items-center gap-3">
-            <ProfileMenu />
-            <button onClick={logout} className="nb-btn px-4 py-2 text-sm" style={{ background: "var(--red)" }}>
-              Keluar
-            </button>
-          </div>
+          <ProfileMenu />
         </div>
 
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />

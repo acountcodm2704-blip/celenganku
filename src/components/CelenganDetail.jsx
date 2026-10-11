@@ -20,7 +20,7 @@ import EstimasiWaktu from "./EstimasiWaktu";
 import { getKategoriInfo } from "../utils/kategori";
 import RiwayatChart from "./RiwayatChart";
 import ShareModal from "./ShareModal";
-import { Share2, Pencil, Trash2 } from "lucide-react";
+import { Share2, Pencil, Trash2, ArrowLeft } from "lucide-react";
 
 export default function CelenganDetail() {
   const { user } = useAuth();
@@ -119,33 +119,45 @@ export default function CelenganDetail() {
   return (
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
-        <div className="flex justify-between items-center mb-4">
-          <button onClick={() => navigate("/")}
-              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
-              style={{ background: "var(--white)" }}>
-            ← Kembali
+        <div className="flex justify-between items-center gap-2 mb-4">
+          <button
+            onClick={() => navigate("/")}
+            className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5 whitespace-nowrap"
+            style={{ background: "var(--white)" }}
+          >
+            <ArrowLeft size={14} strokeWidth={2.5} /> Kembali
           </button>
+
           <div className="flex gap-2">
             <button
               onClick={() => setShowShare(true)}
-              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5 whitespace-nowrap"
               style={{ background: "var(--blue)" }}
+              title="Bagikan"
+              aria-label="Bagikan"
             >
-              <Share2 size={14} strokeWidth={2.5} /> Bagikan
+              <Share2 size={14} strokeWidth={2.5} />
+              <span className="hidden sm:inline">Bagikan</span>
             </button>
             <button
               onClick={() => navigate(`/celengan/${id}/edit`)}
-              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5 whitespace-nowrap"
               style={{ background: "var(--yellow)" }}
+              title="Edit"
+              aria-label="Edit"
             >
-              <Pencil size={14} strokeWidth={2.5} /> Edit
+              <Pencil size={14} strokeWidth={2.5} />
+              <span className="hidden sm:inline">Edit</span>
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5 whitespace-nowrap"
               style={{ background: "var(--red)" }}
+              title="Hapus"
+              aria-label="Hapus"
             >
-              <Trash2 size={14} strokeWidth={2.5} /> Hapus
+              <Trash2 size={14} strokeWidth={2.5} />
+              <span className="hidden sm:inline">Hapus</span>
             </button>
           </div>
         </div>
@@ -155,10 +167,7 @@ export default function CelenganDetail() {
           style={{ background: "var(--white)" }}
         >
           <div className="p-3">
-            <div
-              className="relative w-full h-48 md:h-56 lg:h-90 rounded-xl mb-4 overflow-hidden"
-              style={{ border: "3px solid black" }}
-            >
+            <div className="w-full aspect-[4/3] rounded-xl overflow-hidden" style={{ border: "3px solid black" }}>
               <img
                 src={celengan.fotoUrl}
                 alt={celengan.nama}

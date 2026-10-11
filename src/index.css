@@ -44,6 +44,8 @@ button, input, select, textarea {
   border: 3px solid var(--black);
   border-radius: 10px;
   font-family: 'Comfortaa', sans-serif;
+  min-width: 0;
+  max-width: 100%;
 }
 .nb-input:focus {
   outline: none;
@@ -56,4 +58,15 @@ button, input, select, textarea {
   user-select: none;
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
+}
+.nb-btn-sm {
+  border: 2px solid var(--black);
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 var(--black);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.nb-btn-sm:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--black);
 }

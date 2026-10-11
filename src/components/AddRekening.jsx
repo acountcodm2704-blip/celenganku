@@ -42,14 +42,20 @@ export default function AddRekening() {
   return (
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
-        <button onClick={() => navigate("/rekening")}
-              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
-              style={{ background: "var(--white)" }}>
-            ← Kembali
-          </button>
+        <button
+          onClick={() => navigate("/rekening")}
+          className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
+          style={{ background: "var(--white)" }}
+        >
+          ← Kembali
+        </button>
         <h1 className="text-2xl font-bold mb-6 mt-4">Tambah Rekening</h1>
 
-        <form onSubmit={handleSubmit} className="nb-card p-6 space-y-5" style={{ background: "var(--white)" }}>
+        <form
+          onSubmit={handleSubmit}
+          className="nb-card p-6 space-y-5"
+          style={{ background: "var(--white)" }}
+        >
           <div>
             <label className="block font-bold mb-2">Nama Rekening</label>
             <input
@@ -64,22 +70,25 @@ export default function AddRekening() {
 
           <div>
             <label className="block font-bold mb-2">Jenis</label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="flex flex-wrap gap-2">
               {JENIS_REKENING.map((j) => {
-  const Icon = j.icon;
-  return (
-    <button
-      key={j.value}
-      type="button"
-      onClick={() => setJenis(j.value)}
-      className="nb-btn py-2 text-xs flex flex-col items-center gap-1"
-      style={{ background: jenis === j.value ? "var(--yellow)" : "var(--white)" }}
-    >
-      <Icon size={20} strokeWidth={2.5} />
-      {j.label}
-    </button>
-  );
-})}
+                const Icon = j.icon;
+                return (
+                  <button
+                    key={j.value}
+                    type="button"
+                    onClick={() => setJenis(j.value)}
+                    className="nb-btn px-3 py-1.5 text-xs flex items-center gap-1.5 whitespace-nowrap"
+                    style={{
+                      background:
+                        jenis === j.value ? "var(--yellow)" : "var(--white)",
+                    }}
+                  >
+                    <Icon size={14} strokeWidth={2.5} />
+                    {j.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

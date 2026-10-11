@@ -76,16 +76,7 @@ export default function Home() {
               <Coins size={28} strokeWidth={2.5} /> MyPocket
             </h1>
           </div>
-          <div className="flex items-center gap-3">
-            <ProfileMenu />
-            <button
-              onClick={logout}
-              className="nb-btn px-4 py-2 text-sm"
-              style={{ background: "var(--red)" }}
-            >
-              Keluar
-            </button>
-          </div>
+          <ProfileMenu />
         </div>
 
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -160,7 +151,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-5">
           {sortedList.map((item) => {
             const progress = getProgress(item);
             const kategoriInfo = getKategoriInfo(item.kategori);
@@ -171,7 +162,7 @@ export default function Home() {
                 className="nb-card p-4 flex flex-col hover:-translate-y-1 transition-transform"
               >
                 <div
-                  className="relative w-full h-48 md:h-56 lg:h-64 rounded-xl mb-4 overflow-hidden"
+                  className="relative w-full aspect-[4/3] rounded-xl mb-4 overflow-hidden"
                   style={{
                     border: "3px solid black",
                     background: "var(--blue)",

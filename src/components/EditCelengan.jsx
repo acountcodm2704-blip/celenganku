@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { uploadImageToCloudinary } from "../cloudinary";
+import { uploadImageToCloudinary, validateImageFile } from "../cloudinary";
 import { formatRupiah, parseRupiah } from "../utils/formatRupiah";
 import { KATEGORI_LIST } from "../utils/kategori";
+import CropModal from "./CropModal";
 
 export default function EditCelengan() {
   const { id } = useParams();
@@ -16,8 +17,9 @@ export default function EditCelengan() {
   const [nominalRencana, setNominalRencana] = useState("");
   const [frekuensiRencana, setFrekuensiRencana] = useState("mingguan");
   const [fotoUrlLama, setFotoUrlLama] = useState("");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null); // hasil crop (blob), kosong kalau foto tidak diganti
   const [preview, setPreview] = useState(null);
+  const [rawImage, setRawImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
 
@@ -44,8 +46,23 @@ export default function EditCelengan() {
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
-    setFile(selected);
-    setPreview(URL.createObjectURL(selected));
+    if (!selected) return;
+
+    const error = validateImageFile(selected);
+    if (error) {
+      alert(error);
+      e.target.value = "";
+      return;
+    }
+
+    setRawImage(URL.createObjectURL(selected));
+    e.target.value = "";
+  };
+
+  const handleCropConfirm = (blob) => {
+    setFile(blob);
+    setPreview(URL.createObjectURL(blob));
+    setRawImage(null);
   };
 
   const handleTargetChange = (e) => setTargetUang(formatRupiah(e.target.value));
@@ -78,7 +95,7 @@ export default function EditCelengan() {
       navigate(`/celengan/${id}`);
     } catch (err) {
       console.error(err);
-      alert("Gagal menyimpan perubahan. Coba lagi.");
+      alert(err.message || "Gagal menyimpan perubahan. Coba lagi.");
     } finally {
       setLoading(false);
     }
@@ -89,16 +106,17 @@ export default function EditCelengan() {
   return (
     <div className="min-h-screen px-4 py-6" style={{ background: "var(--bg)" }}>
       <div className="max-w-md mx-auto">
-        <button onClick={() => navigate(`/celengan/${id}`)}
-              className="nb-btn px-3 py-1.5 text-sm flex items-center gap-1.5"
-              style={{ background: "var(--white)" }}>
-            ← Kembali
-          </button>
-        <h1 className="text-2xl font-bold mb-6 mt-4">Edit Tabungan</h1>
+        <button
+          onClick={() => navigate(`/celengan/${id}`)}
+          className="font-bold mb-4"
+        >
+          ← Kembali
+        </button>
+        <h1 className="text-2xl font-bold mb-6">Edit Celengan</h1>
 
         <form
           onSubmit={handleSubmit}
-          className="nb-card p-6 space-y-5"
+          className="nb-card p-4 sm:p-6 space-y-5"
           style={{ background: "var(--white)" }}
         >
           <div>
@@ -106,8 +124,8 @@ export default function EditCelengan() {
             <img
               src={preview || fotoUrlLama}
               alt={nama}
-              className="w-28 h-28 object-cover rounded-xl mb-3"
-              style={{ border: "3px solid black" }}
+              className="w-full rounded-xl object-cover mb-3"
+              style={{ aspectRatio: "4 / 3", border: "3px solid black" }}
             />
             <label
               htmlFor="fotoInputEdit"
@@ -123,9 +141,7 @@ export default function EditCelengan() {
               onChange={handleFileChange}
               className="hidden"
             />
-            <p className="text-xs mt-2">
-              Kosongkan kalau tidak ingin ganti foto
-            </p>
+            <p className="text-xs mt-2">Biarkan kalau tidak ingin ganti foto</p>
           </div>
 
           <div>
@@ -141,7 +157,7 @@ export default function EditCelengan() {
 
           <div>
             <label className="block font-bold mb-2">Kategori</label>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="flex flex-wrap gap-2">
               {KATEGORI_LIST.map((k) => {
                 const Icon = k.icon;
                 return (
@@ -149,13 +165,13 @@ export default function EditCelengan() {
                     key={k.value}
                     type="button"
                     onClick={() => setKategori(k.value)}
-                    className="nb-btn py-2 text-xs flex flex-col items-center gap-1"
+                    className="nb-btn px-3 py-1.5 text-xs flex items-center gap-1.5 whitespace-nowrap"
                     style={{
                       background:
                         kategori === k.value ? "var(--yellow)" : "var(--white)",
                     }}
                   >
-                    <Icon size={20} strokeWidth={2.5} />
+                    <Icon size={14} strokeWidth={2.5} />
                     {k.label}
                   </button>
                 );
@@ -179,19 +195,19 @@ export default function EditCelengan() {
             <label className="block font-bold mb-2">
               Rencana Nabung (opsional)
             </label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 inputMode="numeric"
                 value={nominalRencana}
                 onChange={handleRencanaChange}
                 placeholder="Contoh: 50.000"
-                className="nb-input flex-1 px-3 py-2"
+                className="nb-input w-full sm:flex-1 px-3 py-2"
               />
               <select
                 value={frekuensiRencana}
                 onChange={(e) => setFrekuensiRencana(e.target.value)}
-                className="nb-input px-3 py-2"
+                className="nb-input w-full sm:w-auto px-3 py-2"
               >
                 <option value="harian">/ Hari</option>
                 <option value="mingguan">/ Minggu</option>
@@ -210,6 +226,17 @@ export default function EditCelengan() {
           </button>
         </form>
       </div>
+
+      {rawImage && (
+        <CropModal
+          imageSrc={rawImage}
+          aspect={4 / 3}
+          cropShape="rect"
+          title="Atur Foto Barang"
+          onCancel={() => setRawImage(null)}
+          onConfirm={handleCropConfirm}
+        />
+      )}
     </div>
   );
 }
